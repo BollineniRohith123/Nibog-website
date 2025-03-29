@@ -5,23 +5,32 @@ import Image from 'next/image';
 import Layout from '../src/components/Layout';
 import { Award, Target, Heart } from 'react-feather';
 
+// Unsplash image URLs for team members
+const unsplashTeamImages = [
+  'https://source.unsplash.com/random/400x600/?professional,man',
+  'https://source.unsplash.com/random/400x600/?professional,woman',
+  'https://source.unsplash.com/random/400x600/?business,man',
+  'https://source.unsplash.com/random/400x600/?business,woman',
+  'https://source.unsplash.com/random/400x600/?entrepreneur',
+];
+
 const teamMembers = [
   {
     name: 'Rohith Srinivas',
     role: 'Founder & CEO',
-    image: '/team/rohith.jpg',
+    image: unsplashTeamImages[0],
     bio: 'Passionate about creating opportunities for children to explore and grow through sports.'
   },
   {
     name: 'Priya Sharma',
     role: 'Head of Operations',
-    image: '/team/priya.jpg',
+    image: unsplashTeamImages[1],
     bio: 'Dedicated to ensuring smooth event management and child safety.'
   },
   {
     name: 'Arjun Patel',
     role: 'Program Director',
-    image: '/team/arjun.jpg',
+    image: unsplashTeamImages[2],
     bio: 'Expert in designing engaging and educational sports programs for kids.'
   }
 ];
@@ -32,7 +41,7 @@ export default function AboutPage() {
       <div className="container mx-auto px-4 py-8">
         {/* Hero Section */}
         <section className="text-center mb-16">
-          <h1 className="text-h1 text-teal mb-6">
+          <h1 className="text-4xl font-bold text-teal mb-6">
             Empowering Children Through Sports
           </h1>
           <p className="text-xl text-gray max-w-3xl mx-auto">
@@ -66,7 +75,7 @@ export default function AboutPage() {
             <div className="flex justify-center mb-4">
               <Heart className="h-12 w-12 text-teal" />
             </div>
-            <h3 className="text-h3 text-teal mb-4">Our Values</h3>
+            <h3 className="text-xl font-semibold text-teal mb-4">Our Values</h3>
             <p className="text-gray">
               Inclusivity, Fun, Safety, Personal Growth, and Community Building.
             </p>
@@ -94,7 +103,7 @@ export default function AboutPage() {
                   />
                 </div>
                 <div className="p-6 text-center">
-                  <h3 className="text-h3 text-teal mb-2">{member.name}</h3>
+                  <h3 className="text-xl font-semibold text-teal mb-2">{member.name}</h3>
                   <p className="text-gray mb-4">{member.role}</p>
                   <p className="text-gray italic">{member.bio}</p>
                 </div>
@@ -105,24 +114,24 @@ export default function AboutPage() {
 
         {/* Impact Section */}
         <section className="bg-light-cyan rounded-apple-lg p-12 text-center">
-          <h2 className="text-h2 text-teal mb-6">
+          <h2 className="text-3xl font-bold text-teal mb-6">
             Our Impact So Far
           </h2>
           <div className="grid md:grid-cols-4 gap-8">
             <div>
-              <p className="text-h2 text-teal font-bold">500+</p>
+              <p className="text-3xl text-teal font-bold">500+</p>
               <p className="text-gray">Events Hosted</p>
             </div>
             <div>
-              <p className="text-h2 text-teal font-bold">10,000+</p>
+              <p className="text-3xl text-teal font-bold">10,000+</p>
               <p className="text-gray">Children Participated</p>
             </div>
             <div>
-              <p className="text-h2 text-teal font-bold">25+</p>
+              <p className="text-3xl text-teal font-bold">25+</p>
               <p className="text-gray">Cities Covered</p>
             </div>
             <div>
-              <p className="text-h2 text-teal font-bold">95%</p>
+              <p className="text-3xl text-teal font-bold">95%</p>
               <p className="text-gray">Satisfaction Rate</p>
             </div>
           </div>

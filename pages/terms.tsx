@@ -130,7 +130,7 @@ export default function TermsOfServicePage() {
 
           {/* Legal Disclaimer */}
           <section className="bg-white rounded-apple-lg shadow-apple-light p-12 text-center">
-            <h2 className="text-h2 text-teal mb-6">
+            <h2 className="text-3xl font-bold text-teal mb-6">
               Legal Disclaimer
             </h2>
             <p className="text-gray max-w-2xl mx-auto mb-8">

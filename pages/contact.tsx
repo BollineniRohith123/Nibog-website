@@ -81,7 +81,7 @@ export default function ContactPage() {
                   <MapPin className="h-6 w-6 text-teal" />
                 </div>
                 <div>
-                  <h3 className="text-h3 text-teal">Address</h3>
+                  <h3 className="text-xl font-semibold text-teal">Address</h3>
                   <p className="text-gray">
                     123 NIBOG Street, Tech Park,
                     Bangalore, Karnataka 560001

@@ -228,7 +228,7 @@ export default function Home() {
                   date={event.date}
                   location={event.location}
                   price={event.registrationFee}
-                  image={`/events/event-${event.id % 5 + 1}.jpg`} // Fallback image pattern
+                  image={getEventImage(event.id)}
                   eventId={event.id}
                 />
               </div>

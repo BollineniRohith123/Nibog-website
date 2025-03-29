@@ -5,6 +5,25 @@ import { SignedIn, SignedOut, SignInButton } from '@clerk/nextjs';
 import Layout from '../../components/Layout';
 import { prisma } from '../../lib/db';
 import { format } from 'date-fns';
+import Image from 'next/image';
+
+// Unsplash image URLs for events
+const unsplashImages = [
+  'https://source.unsplash.com/random/800x600/?baby,sports',
+  'https://source.unsplash.com/random/800x600/?toddler,play',
+  'https://source.unsplash.com/random/800x600/?child,activity',
+  'https://source.unsplash.com/random/800x600/?kids,games',
+  'https://source.unsplash.com/random/800x600/?children,fun',
+  'https://source.unsplash.com/random/800x600/?infant,event',
+  'https://source.unsplash.com/random/800x600/?baby,event',
+  'https://source.unsplash.com/random/800x600/?toddler,event',
+  'https://source.unsplash.com/random/800x600/?child,event',
+];
+
+// Get an image for an event
+const getEventImage = (eventId: number) => {
+  return unsplashImages[eventId % unsplashImages.length];
+};
 
 interface Game {
   id: number;
@@ -124,20 +143,43 @@ const EventDetailPage: React.FC<EventDetailProps> = ({ event }) => {
             </div>
           </div>
 
-          {/* Event Image/Illustration Section */}
-          <div className="hidden md:block">
-            <div className="bg-gray-100 rounded-lg h-full flex items-center justify-center">
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                viewBox="0 0 200 200" 
-                className="w-3/4 opacity-70"
-              >
-                <path 
-                  fill="#A5B4FC" 
-                  d="M100 20a80 80 0 100 160 80 80 0 000-160zm0 140a60 60 0 110-120 60 60 0 010 120z"
+          {/* Event Image Section */}
+          <div className="md:block">
+            <div className="bg-white rounded-lg overflow-hidden shadow-lg h-full">
+              <div className="relative h-96 w-full">
+                <Image 
+                  src={getEventImage(event.id)}
+                  alt={event.name}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
-                <circle cx="100" cy="100" r="40" fill="#6366F1" />
-              </svg>
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-semibold mb-2 text-nibog-primary">Event Details</h3>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-nibog-primary" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-gray-700">Duration: 2 hours</span>
+                  </div>
+                  <div className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-nibog-primary" viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
+                    </svg>
+                    <span className="text-gray-700">Capacity: {event.maxCapacity}</span>
+                  </div>
+                </div>
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <h4 className="font-semibold text-nibog-primary mb-2">What to Expect</h4>
+                  <p className="text-gray-700 text-sm">
+                    Join us for an exciting event designed specifically for young children. 
+                    Our experienced staff will ensure a safe and fun environment for all participants.
+                    Don't miss this opportunity to create lasting memories!
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

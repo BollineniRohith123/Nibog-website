@@ -12,6 +12,7 @@ interface EventCardProps {
   location: string;
   price: number;
   image: string;
+  eventId?: number | string; // Add this line
 }
 
 const EventCard: React.FC<EventCardProps> = ({ 

@@ -73,7 +73,7 @@ export default function EventsPage() {
   return (
     <Layout title="NIBOG Events">
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-h1 text-teal mb-8 text-center">Upcoming NIBOG Events</h1>
+        <h1 className="text-4xl font-bold text-teal mb-8 text-center">Upcoming NIBOG Events</h1>
 
         {/* Search and Filter Section */}
         <div className="mb-12 grid md:grid-cols-12 gap-4">
@@ -138,25 +138,32 @@ export default function EventsPage() {
         </div>
 
         {/* Events Grid */}
-        <div className="grid md:grid-cols-3 gap-8">
-          {filteredEvents.length > 0 ? (
-            filteredEvents.map(event => (
+        {loading ? (
+          <div className="flex justify-center items-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal"></div>
+          </div>
+        ) : error ? (
+          <div className="text-center py-8 text-red-500">{error}</div>
+        ) : filteredEvents.length > 0 ? (
+          <div className="grid md:grid-cols-3 gap-8">
+            {filteredEvents.map(event => (
               <EventCard 
                 key={event.id}
-                title={event.title}
-                description={event.description}
+                title={event.name}
+                description={event.description || ''}
                 date={event.date}
                 location={event.location}
-                price={event.price}
-                image={event.image}
+                price={event.registrationFee}
+                image={getEventImage(event.id)}
+                eventId={event.id}
               />
-            ))
-          ) : (
-            <div className="col-span-full text-center text-gray">
-              <p>No events found matching your search criteria.</p>
-            </div>
-          )}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-8 text-gray-500">
+            <p>No events found matching your search criteria.</p>
+          </div>
+        )}
       </div>
     </Layout>
   );
