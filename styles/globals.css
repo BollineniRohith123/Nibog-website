@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Lato:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Color Palette */
+  --color-pale-yellow: #F0E68C;
+  --color-teal: #008080;
+  --color-gray: #8B8B83;
+  --color-coral-red: #E97451;
+  --color-light-blue: #ADD8E6;
+  --color-green: #228B22;
+  --color-light-cyan: #5F9EA0;
+  --color-medium-turquoise: #40E0D0;
+  --color-dark-green: #006400;
+
+  /* Typography */
+  --font-primary: 'Montserrat', sans-serif;
+  --font-secondary: 'Lato', sans-serif;
+}
+
+html, body {
+  font-family: var(--font-primary);
+  background-color: var(--color-pale-yellow);
+  color: var(--color-teal);
+  scroll-behavior: smooth;
+}
+
+/* Headings */
+h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--color-teal);
+}
+
+h2 {
+  font-size: 2.25rem;
+  font-weight: 600;
+  color: var(--color-teal);
+}
+
+h3 {
+  font-size: 1.875rem;
+  font-weight: 600;
+  color: var(--color-teal);
+}
+
+h4 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-teal);
+}
+
+/* Body Text */
+p {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--color-gray);
+}
+
+/* Labels and Captions */
+label, .caption {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--color-gray);
+}
+
+/* Button Styles */
+.btn-primary {
+  background-color: var(--color-coral-red);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-medium-turquoise);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Styles */
+input, select {
+  border-color: var(--color-light-cyan);
+  transition: all 0.3s ease;
+}
+
+input:focus, select:focus {
+  border-color: var(--color-teal);
+  box-shadow: 0 0 0 3px rgba(0, 128, 128, 0.2);
+}
+
+/* Responsive Grid */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 16px;
+}
+
+/* Accessibility and Focus States */
+*:focus {
+  outline: 2px solid var(--color-coral-red);
+  outline-offset: 2px;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-light-blue);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-teal);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-dark-green);
+}

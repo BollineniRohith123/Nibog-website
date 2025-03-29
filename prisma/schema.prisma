@@ -1,0 +1,116 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+// Enum for user roles
+enum UserRole {
+  ADMIN
+  PARENT
+  SUPER_ADMIN
+}
+
+// Enum for event and registration statuses
+enum EventStatus {
+  UPCOMING
+  ONGOING
+  COMPLETED
+  CANCELLED
+}
+
+enum RegistrationStatus {
+  PENDING
+  CONFIRMED
+  PAID
+  CANCELLED
+}
+
+// User Model
+model User {
+  id             String           @id @default(uuid())
+  email          String           @unique
+  firstName      String
+  lastName       String
+  phoneNumber    String?
+  password       String
+  clerkUserId    String           @unique
+  role           UserRole         @default(PARENT)
+  registrations  Registration[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+}
+
+// City Model
+model City {
+  id            Int              @id @default(autoincrement())
+  name          String           @unique
+  description   String?
+  imageUrl      String?
+  events        Event[]
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+}
+
+// Event Model
+model Event {
+  id            Int              @id @default(autoincrement())
+  name          String
+  description   String?
+  date          DateTime
+  time          String
+  location      String
+  city          City             @relation(fields: [cityId], references: [id])
+  cityId        Int
+  game          Game             @relation(fields: [gameId], references: [id])
+  gameId        Int
+  registrationFee Float
+  status        EventStatus      @default(UPCOMING)
+  registrations Registration[]
+  maxParticipants Int?
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+}
+
+// Game Model
+model Game {
+  id            Int              @id @default(autoincrement())
+  name          String           @unique
+  description   String?
+  events        Event[]
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+}
+
+// Registration Model
+model Registration {
+  id            String               @id @default(uuid())
+  user          User                @relation(fields: [userId], references: [id])
+  userId        String
+  event         Event                @relation(fields: [eventId], references: [id])
+  eventId       Int
+  status        RegistrationStatus   @default(PENDING)
+  paymentStatus Boolean              @default(false)
+  transactionId String?
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @updatedAt
+}
+
+// Payment Model
+model Payment {
+  id            String               @id @default(uuid())
+  amount        Float
+  currency      String
+  status        String
+  method        String
+  transactionId String               @unique
+  userId        String
+  eventId       Int
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @updatedAt
+}
