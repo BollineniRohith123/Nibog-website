@@ -13,36 +13,49 @@ interface City {
   eventCount: number;
 }
 
+// Unsplash image URLs for cities
+const unsplashCityImages = [
+  'https://source.unsplash.com/random/800x600/?mumbai,city',
+  'https://source.unsplash.com/random/800x600/?delhi,city',
+  'https://source.unsplash.com/random/800x600/?bangalore,city',
+  'https://source.unsplash.com/random/800x600/?chennai,city',
+  'https://source.unsplash.com/random/800x600/?hyderabad,city',
+  'https://source.unsplash.com/random/800x600/?kolkata,city',
+  'https://source.unsplash.com/random/800x600/?pune,city',
+  'https://source.unsplash.com/random/800x600/?ahmedabad,city',
+  'https://source.unsplash.com/random/800x600/?jaipur,city',
+];
+
 export default function CitiesPage() {
   const cities: City[] = [
     {
       name: 'Mumbai',
       description: 'The city of dreams hosts exciting baby sports events!',
-      image: '/cities/mumbai.jpg',
+      image: unsplashCityImages[0],
       eventCount: 5
     },
     {
       name: 'Delhi',
       description: 'Experience the capital\'s vibrant baby sports scene!',
-      image: '/cities/delhi.jpg',
+      image: unsplashCityImages[1],
       eventCount: 4
     },
     {
       name: 'Bangalore',
       description: 'Tech city with innovative baby sports programs!',
-      image: '/cities/bangalore.jpg',
+      image: unsplashCityImages[2],
       eventCount: 3
     },
     {
       name: 'Chennai',
       description: 'Cultural hub with amazing baby sports opportunities!',
-      image: '/cities/chennai.jpg',
+      image: unsplashCityImages[3],
       eventCount: 2
     },
     {
       name: 'Hyderabad',
       description: 'Discover exciting events in the city of pearls!',
-      image: '/cities/hyderabad.jpg',
+      image: unsplashCityImages[4],
       eventCount: 3
     }
   ];
@@ -50,7 +63,7 @@ export default function CitiesPage() {
   return (
     <Layout title="NIBOG Cities">
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-h1 text-teal mb-8 text-center">
+        <h1 className="text-4xl font-bold text-teal mb-8 text-center">
           NIBOG Events by City
         </h1>
 

@@ -95,7 +95,7 @@ export default function FAQPage() {
           </div>
 
           <div className="mt-12 text-center bg-light-cyan rounded-apple-lg p-8">
-            <h2 className="text-h2 text-teal mb-4">
+            <h2 className="text-3xl font-bold text-teal mb-4">
               Still Have Questions?
             </h2>
             <p className="text-gray mb-6">
