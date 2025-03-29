@@ -20,7 +20,8 @@ const EventCard: React.FC<EventCardProps> = ({
   date, 
   location, 
   price, 
-  image 
+  image,
+  eventId
 }) => {
   return (
     <div 
@@ -76,7 +77,7 @@ const EventCard: React.FC<EventCardProps> = ({
           </div>
         </div>
         
-        <Link href={`/events/${title.toLowerCase().replace(/\s+/g, '-')}`}>
+        <Link href={eventId ? `/events/${eventId}` : `/events/${title.toLowerCase().replace(/\s+/g, '-')}`}>
           <button
             className="w-full bg-gradient-primary text-white 
               px-6 py-3 rounded-apple-md 

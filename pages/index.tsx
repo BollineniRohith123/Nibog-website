@@ -1,36 +1,70 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import EventCard from '../src/components/EventCard';
 import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs';
 import { Search, MapPin, Calendar } from 'react-feather';
 
-const MOCK_EVENTS = [
-  {
-    id: '1',
-    title: 'Tech Innovation Summit',
-    description: 'Explore groundbreaking technologies and network with industry leaders.',
-    date: '2024-02-15',
-    location: 'Silicon Valley Convention Center',
-    price: 299.99,
-    image: '/events/tech-summit.jpg'
-  },
-  {
-    id: '2',
-    title: 'Design Thinking Workshop',
-    description: 'Master the art of user-centric design and creative problem solving.',
-    date: '2024-03-22',
-    location: 'Creative Hub, San Francisco',
-    price: 199.50,
-    image: '/events/design-workshop.jpg'
-  }
-];
+interface Event {
+  id: number;
+  name: string;
+  description: string | null;
+  date: string;
+  location: string;
+  registrationFee: number;
+  city: {
+    name: string;
+  };
+}
 
 export default function Home() {
   const [searchCity, setSearchCity] = useState('');
   const [searchDate, setSearchDate] = useState('');
+  const [events, setEvents] = useState<Event[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Fetch events on component mount
+  useEffect(() => {
+    fetchEvents();
+  }, []);
+
+  // Fetch events with optional filters
+  const fetchEvents = async (city?: string, date?: string) => {
+    try {
+      setLoading(true);
+      
+      // Build query parameters
+      const params = new URLSearchParams();
+      if (city) params.append('city', city);
+      if (date) params.append('date', date);
+      
+      // Make API request
+      const response = await fetch(`/api/events?${params.toString()}`);
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch events');
+      }
+      
+      const data = await response.json();
+      setEvents(data.events || []);
+      setError(null);
+    } catch (err) {
+      console.error('Error fetching events:', err);
+      setError('Unable to load events. Please try again later.');
+      setEvents([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Handle search submission
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    fetchEvents(searchCity, searchDate);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-apple-white to-gray-50 text-apple-black">
@@ -117,9 +151,7 @@ export default function Home() {
           </p>
 
           {/* Search and Filter Section */}
-          <div 
-            className="max-w-3xl mx-auto flex space-x-4"
-          >
+          <form onSubmit={handleSearch} className="max-w-3xl mx-auto flex space-x-4">
             <div className="relative flex-1">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <MapPin className="h-5 w-5 text-button-primary" />
@@ -156,6 +188,7 @@ export default function Home() {
             </div>
             
             <button
+              type="submit"
               className="bg-gradient-primary text-white px-6 py-3 rounded-apple-md 
                 hover:bg-gradient-hover transition duration-300
                 shadow-button-primary hover:shadow-button-glow
@@ -164,7 +197,7 @@ export default function Home() {
             >
               <Search className="h-5 w-5" />
             </button>
-          </div>
+          </form>
         </div>
       </div>
 
@@ -177,20 +210,31 @@ export default function Home() {
           Upcoming Events
         </h2>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {MOCK_EVENTS.map((event, index) => (
-            <div key={event.id}>
-              <EventCard 
-                title={event.title}
-                description={event.description}
-                date={event.date}
-                location={event.location}
-                price={event.price}
-                image={event.image}
-              />
-            </div>
-          ))}
-        </div>
+        {loading ? (
+          <div className="flex justify-center items-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-button-primary"></div>
+          </div>
+        ) : error ? (
+          <div className="text-center py-8 text-red-500">{error}</div>
+        ) : events.length === 0 ? (
+          <div className="text-center py-8 text-gray-500">No events found. Try adjusting your search criteria.</div>
+        ) : (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {events.map((event) => (
+              <div key={event.id}>
+                <EventCard 
+                  title={event.name}
+                  description={event.description || ''}
+                  date={event.date}
+                  location={event.location}
+                  price={event.registrationFee}
+                  image={`/events/event-${event.id % 5 + 1}.jpg`} // Fallback image pattern
+                  eventId={event.id}
+                />
+              </div>
+            ))}
+          </div>
+        )}
       </section>
 
       {/* Call to Action */}
